@@ -18,6 +18,7 @@ export async function GET(req) {
 
     return NextResponse.json(locations.get(code));
   } catch (error) {
+    console.log(error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

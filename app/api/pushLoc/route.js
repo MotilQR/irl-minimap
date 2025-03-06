@@ -19,6 +19,7 @@ export async function POST(req) {
 
     return NextResponse.json({ message: "Location updated" });
   } catch (error) {
+    console.log(error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
