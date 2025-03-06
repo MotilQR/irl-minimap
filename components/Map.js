@@ -15,7 +15,7 @@ const user = new Icon({
 function GetPos({ setPosition }) {
   const map = useMap();
 
-  useEffect(() => {
+  useEffect(() => { 
     if ("geolocation" in navigator) {
       navigator.geolocation.watchPosition(
         (pos) => {
