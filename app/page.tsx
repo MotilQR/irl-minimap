@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import LocationSender from "@/components/Sender";
 
 export default function Home() {
   const [startFlag, setStartFlag] = useState(false);
@@ -15,7 +16,10 @@ export default function Home() {
       <div className="flex flex-col bg-purple-800 p-6 w-[400px] rounded-lg shadow-lg items-center px-4">
         <h1 className="font-mono text-2xl">Twitch IRL minimap</h1>
         {startFlag ? (
-          <p>Started</p>
+          <div>
+            <p>Started</p>
+            <LocationSender/>
+          </div>
         ) : (
           <div className="flex flex-col items-center">
             <p className="px-7 mt-5 text-center">This is web extension for OBS to display minimap on your IRL stream, press button to start!</p>

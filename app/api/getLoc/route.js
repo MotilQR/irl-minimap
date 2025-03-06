@@ -4,21 +4,18 @@ import { NextResponse } from "next/server";
 const locations = new Map();
 
 /**
- * GET-запрос для получения координат по коду
- * @param {Request} req
+ * POST-запрос для получения координат по коду (из body)
  */
-export async function GET(req) {
+export async function POST(req) {
   try {
-    const { searchParams } = new URL(req.url);
-    const code = searchParams.get("code");
+    const { code } = await req.json();
 
     if (!code || !locations.has(code)) {
       return NextResponse.json({ error: "Location not found" }, { status: 404 });
     }
-
-    return NextResponse.json(locations.get(code));
+    return NextResponse.json(locations.get(code)); // Возвращаем координаты
   } catch (error) {
-    console.log(error);
+    console.error("Ошибка сервера:", error);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

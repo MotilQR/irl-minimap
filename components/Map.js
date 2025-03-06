@@ -34,6 +34,37 @@ function GetPos({ setPosition }) {
 
 export default function Map() {
     const [position, setPosition] = useState(null);
+    const [location, setLocation] = useState(null);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        async function fetchLocation() {
+          try {
+            const response = await fetch("/api/getLoc", {
+              method: "POST", // Теперь используем POST-запрос
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ code: "MY_SECRET_CODE" }), // Передаём код в body
+            });
+      
+            if (!response.ok) {
+              throw new Error("Ошибка запроса: " + response.status);
+            }
+      
+            const data = await response.json();
+            setLocation(data);
+          } catch (err) {
+            console.error("Ошибка:", err);
+            setError(err.message);
+          }
+        }
+      
+        fetchLocation();
+      }, []);
+
+      console.log(error);
+      console.log(location);
 
   return (
     <div className="w-screen h-screen">
