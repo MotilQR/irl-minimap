@@ -22,6 +22,7 @@ export async function POST(request, context) {
 export async function GET(request, { params }) {
     const paramss = await params;
     const id = paramss.id;
+    console.log(locations);
 
     if (!id) {
         return NextResponse.json({ error: "ID is required" }, { status: 400 });
