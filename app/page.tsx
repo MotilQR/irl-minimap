@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { Copy } from "lucide-react"; 
 import  LocationSender  from "@/components/Sender";
 
 export default function Home() {
@@ -9,17 +10,27 @@ export default function Home() {
     if (startFlag) {
       console.log(id);
     }
-  },[startFlag]) 
+  },[id]) 
+
+  const handleCopy = async () => {
+    const s = `https://irl-minimap.vercel.app/map?id=${id}`;
+    await navigator.clipboard.writeText(s);
+  }
   
 
   return (
     <div className="flex flex-col gap-5 mx-auto w-full max-w-2xl items-center justify-center h-screen">
-      <div className="flex flex-col bg-purple-800 p-6 w-[400px] rounded-lg shadow-lg items-center px-4">
+      <div className="flex flex-col bg-purple-800 p-6 w-[400px] rounded-lg shadow-lg items-center px-4 shadow-purple-950 ">
         <h1 className="font-mono text-2xl">Twitch IRL minimap</h1>
         {startFlag ? (
-          <div>
-            <p>Started</p>
+          <div className="flex items-center mt-3 bg-purple-700 rounded-2xl shadow shadow-purple-950">
             <LocationSender setId={setId}/>
+            <button
+              className="cursor-pointer hover:text-gray-300 mr-6"
+              onClick={handleCopy}
+            >
+              <Copy/>
+            </button>
           </div>
         ) : (
           <div className="flex flex-col items-center">

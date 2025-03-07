@@ -17,7 +17,6 @@ export default function LocationSender({ setId }) {
 
 
     const sendLocation = (lat, lng) => {
-      console.log(lat, lng);
       fetch(`/api/location/${id}`, {
         method: "POST",
         headers: {
@@ -29,7 +28,6 @@ export default function LocationSender({ setId }) {
 
     const watchId = navigator.geolocation.watchPosition(
       (pos) => {
-        console.log(pos);
         const { latitude, longitude } = pos.coords;
         sendLocation(latitude, longitude);
       },
@@ -40,5 +38,5 @@ export default function LocationSender({ setId }) {
     return () => navigator.geolocation.clearWatch(watchId);
   }, []);
 
-  return error ? <p style={{ color: "red" }}>{error}</p> : <p>{`https://irl-minimap.vercel.app/map?id=${id}`}</p>;
+  return error ? <p style={{ color: "red" }}>{error}</p> : <h1 className="text-center font-bold text-xl p-2 text-white">{`https://irl-minimap.vercel.app/map?id=${id}`}</h1>;
 }
