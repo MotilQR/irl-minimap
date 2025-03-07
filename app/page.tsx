@@ -1,12 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
-import LocationSender from "@/components/Sender";
+import  LocationSender  from "@/components/Sender";
 
 export default function Home() {
   const [startFlag, setStartFlag] = useState(false);
+  const [id, setId] = useState(null);
   useEffect(() => {
     if (startFlag) {
-
+      console.log(id);
     }
   },[startFlag]) 
   
@@ -18,7 +19,7 @@ export default function Home() {
         {startFlag ? (
           <div>
             <p>Started</p>
-            <LocationSender/>
+            <LocationSender setId={setId}/>
           </div>
         ) : (
           <div className="flex flex-col items-center">

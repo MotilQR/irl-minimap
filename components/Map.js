@@ -33,39 +33,30 @@ function GetPos({ setPosition }) {
 }
 
 export default function Map() {
-    const [position, setPosition] = useState(null);
-    const [location, setLocation] = useState(null);
-    const [error, setError] = useState(null);
+  const [position, setPosition] = useState(null);
+  const [id, setId] = useState(null); 
 
-    useEffect(() => {
-        async function fetchLocation() {
-          try {
-            const response = await fetch("/api/getLoc", {
-              method: "POST", // Теперь используем POST-запрос
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ code: "MY_SECRET_CODE" }), // Передаём код в body
-            });
-      
-            if (!response.ok) {
-              throw new Error("Ошибка запроса: " + response.status);
-            }
-      
-            const data = await response.json();
-            setLocation(data);
-          } catch (err) {
-            console.error("Ошибка:", err);
-            setError(err.message);
-          }
-        }
-      
-        fetchLocation();
-      }, []);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const id = params.get("id");
+    setId(id);
+  }, [])
 
-      console.log(error);
-      console.log(location);
+  useEffect(() => {
+    const getLocation = (id) => {
+      fetch(`/api/location/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).catch((err) => console.error("Error was occured while getting coordinates:", err));
+    };
 
+    setPosition(getLocation(id));
+  }, [id])
+  useEffect(() => {
+    console.log(position);
+  }, [position])
   return (
     <div className="w-screen h-screen">
       <MapContainer
