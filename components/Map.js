@@ -9,7 +9,7 @@ import "leaflet/dist/leaflet.css"
 
 const user = new Icon({
     iconUrl: "/navigation.png",
-    iconSize: [25, 25]
+    iconSize: [50, 50]
 })
 
 export default function Map() {
@@ -55,7 +55,7 @@ export default function Map() {
       {position ? (
         <MapContainer
         center={position} // По умолчанию Прага
-        zoom={13}
+        zoom={20}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
