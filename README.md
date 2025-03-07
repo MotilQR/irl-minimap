@@ -15,9 +15,7 @@
     align-items: center;
     clip-path: circle(50%);
     -webkit-clip-path: circle(50%);
-    background: transparent; /* Прозрачный фон */
-    border: 10px solid red; /* Белая рамка */
-    box-sizing: border-box; /* Чтобы рамка не выходила за пределы */
+    background: transparent;
   }
   ```
 - Make resolution 600x600 (or any other square)
