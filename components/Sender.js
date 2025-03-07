@@ -31,7 +31,7 @@ export default function LocationSender({ setId }) {
         const { latitude, longitude } = pos.coords;
         window.addEventListener("deviceorientation", (event) => {
           const rot = event.alpha;
-          console.log(rot);
+          console.log(event.alpha);
           sendLocation(latitude, longitude, rot);
         })
       },

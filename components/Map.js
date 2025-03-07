@@ -59,6 +59,7 @@ export default function Map() {
         if (position) {
           setPosition([data.lot, data.lng]);
           setDir(data.rot);
+          console.log(data);
         }
       });
     }
