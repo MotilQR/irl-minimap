@@ -2,7 +2,7 @@
 - Go on the site
 - Press start
 - Copy the link into the OBS
-- In the OBS enter the following CSS code
+- In the OBS past the following CSS code
   ```CSS
   body {
     width: 100vw;
@@ -18,7 +18,7 @@
     background: transparent; /* Прозрачный фон */
     border: 10px solid red; /* Белая рамка */
     box-sizing: border-box; /* Чтобы рамка не выходила за пределы */
-    }
+  }
   ```
 - Make resolution 600x600 (or any other square)
 - ### Done)
