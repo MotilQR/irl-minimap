@@ -3,18 +3,18 @@ import { NextResponse } from "next/server";
 const locations = new Map()
 
 export async function POST(request, context) {
-    const { lat, lng } = await request.json();
+    const { lat, lng, rot } = await request.json();
     const params = await context.params;
     const id = params.id;
+    console.log(rot);
 
-
-    if (!lat || !lng || !id) 
+    if (!lat || !lng || !rot ||  !id) 
         return NextResponse.json({ error: "Invalid coordinates" }, { status: 404 });
 
     if (locations.has(id))
         return NextResponse.json({ error: "Invalid ID" }, { status: 404 });
     else 
-        locations.set(id, { lat, lng });
+        locations.set(id, { lat, lng, rot });
     
     return NextResponse.json({ message: "Ok" });
 }

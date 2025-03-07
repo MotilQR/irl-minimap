@@ -12,9 +12,23 @@ const user = new Icon({
     iconSize: [50, 50]
 })
 
+function UpdateMapView({ position, direction }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (position) {
+      map.setView(position, 15, { animate: true });
+      map.getPane("mapPane").style.transform = `rotate(${-direction}deg)`;
+    }
+  }, [position, direction, map]);
+
+  return null;
+}
+
 export default function Map() {
   const [position, setPosition] = useState(null);
   const [id, setId] = useState(null); 
+  const [dir, setDir] = useState(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -29,7 +43,7 @@ export default function Map() {
         if (!response.ok) throw new Error("Failed to fetch location");
         const data = await response.json();
   
-        if (!data.location || !data.location.lat || !data.location.lng) {
+        if (!data.location || !data.location.lat || !data.location.lng || !data.location.rot) {
           throw new Error("Invalid location data");
         }
   
@@ -41,10 +55,10 @@ export default function Map() {
     };
   
     if (id) {
-      getLocation(id).then((position) => {
+      getLocation(id).then((data) => {
         if (position) {
-          console.log(position);
-          setPosition(position);
+          setPosition([data.lot, data.lng]);
+          setDir(data.rot);
         }
       });
     }
@@ -61,9 +75,8 @@ export default function Map() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {position ? (
-            <Marker position={position} icon={user}></Marker>
-        ) : null}
+        <UpdateMapView position={position} direction={dir} />
+        <Marker position={position} icon={user}></Marker>
       </MapContainer>
     ) : (
       <h1>Loading</h1>
