@@ -12,26 +12,6 @@ const user = new Icon({
     iconSize: [25, 25]
 })
 
-function GetPos({ setPosition }) {
-  const map = useMap();
-
-  useEffect(() => { 
-    if ("geolocation" in navigator) {
-      navigator.geolocation.watchPosition(
-        (pos) => {
-          const { latitude, longitude } = pos.coords;
-          setPosition([latitude, longitude]);
-          map.setView([latitude, longitude], 13); // Центрируем карту на новых координатах
-        },
-        (error) => {
-          console.error("Ошибка геолокации:", error.message);
-        },
-        { enableHighAccuracy: true }
-      );
-    }
-  }, [map]);
-}
-
 export default function Map() {
   const [position, setPosition] = useState(null);
   const [id, setId] = useState(null); 
@@ -43,35 +23,51 @@ export default function Map() {
   }, [])
 
   useEffect(() => {
-    const getLocation = (id) => {
-      fetch(`/api/location/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).catch((err) => console.error("Error was occured while getting coordinates:", err));
+    const getLocation = async (id) => {
+      try {
+        const response = await fetch(`/api/location/${id}`);
+        if (!response.ok) throw new Error("Failed to fetch location");
+        const data = await response.json();
+  
+        if (!data.location || !data.location.lat || !data.location.lng) {
+          throw new Error("Invalid location data");
+        }
+  
+        return data.location; // Возвращаем координаты
+      } catch (err) {
+        console.error("Error fetching coordinates:", err);
+        return null;
+      }
     };
-
-    setPosition(getLocation(id));
-  }, [id])
-  useEffect(() => {
-    console.log(position);
-  }, [position])
+  
+    if (id) {
+      getLocation(id).then((position) => {
+        if (position) {
+          console.log(position);
+          setPosition(position);
+        }
+      });
+    }
+  }, [id]);
+  
   return (
     <div className="w-screen h-screen">
-      <MapContainer
-        center={[50.0755, 14.4378]} // По умолчанию Прага
+      {position ? (
+        <MapContainer
+        center={position} // По умолчанию Прага
         zoom={13}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <GetPos setPosition={setPosition}/>
         {position ? (
             <Marker position={position} icon={user}></Marker>
         ) : null}
       </MapContainer>
+    ) : (
+      <h1>Loading</h1>
+    )}
     </div>
   );
 }
