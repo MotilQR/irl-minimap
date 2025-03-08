@@ -12,7 +12,7 @@ export async function POST(request, context) {
 
     locations.set(id, { lat, lng});
 
-    console.log("Location pushed correctly!");
+    console.log(`${id} pushed correctly!`);
     return NextResponse.json({ message: "Ok" });
 }
 
@@ -26,7 +26,7 @@ export async function GET(request, { params }) {
 
     console.log("Requested ID:", id);
     if (!locations.has(id)) {
-        console.log("Ivalid ID");
+        console.log("Invalid ID");
         return NextResponse.json({ error: "Invalid ID" }, { status: 404 });
     }
     console.log("Heyyy");
