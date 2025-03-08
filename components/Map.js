@@ -9,7 +9,7 @@ import "leaflet/dist/leaflet.css"
 
 const user = new Icon({
     iconUrl: "/navigation.png",
-    iconSize: [50, 50]
+    iconSize: [50, 50] 
 })
 
 function UpdateMapView({ position, direction }) {
