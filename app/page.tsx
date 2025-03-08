@@ -6,7 +6,7 @@ import  LocationSender  from "@/components/Sender";
 export default function Home() {
   const [startFlag, setStartFlag] = useState(false);
   const [id, setId] = useState(null);
-  const [position, setPosition] = useState(null);
+  const [position, setPosition] = useState([]);
   useEffect(() => {
     if (startFlag) {
       console.log(id);
@@ -24,7 +24,7 @@ export default function Home() {
       <div className="flex flex-col bg-purple-800 p-6 w-[400px] rounded-lg shadow-lg items-center px-4 shadow-purple-950 ">
         <h1 className="font-mono text-2xl">Twitch IRL minimap</h1>
         {startFlag ? (
-          <div className="flex gap-2">
+          <div className="flex flex-col gap-2">
             <div className="flex items-center mt-3 bg-purple-700 rounded-2xl shadow shadow-purple-950">
               <LocationSender setId={setId} setPos={setPosition}/>
               <button
@@ -36,7 +36,9 @@ export default function Home() {
             </div>
             {position ? (
               <div className="flex items-center"> 
-                <p>{position}</p>
+                {position.map((cord) => (
+                  <p key={cord} className="pr-2">{cord}</p>
+                ))}
               </div>
             ) : null}
           </div>
