@@ -12,18 +12,18 @@ const user = new Icon({
     iconSize: [50, 50] 
 })
 
-function UpdateMapView({ position, direction }) {
-  const map = useMap();
+// function UpdateMapView({ position, direction }) {
+//   const map = useMap();
 
-  useEffect(() => {
-    if (position) {
-      map.setView(position, 15, { animate: true });
-      map.getPane("mapPane").style.transform = `rotate(${-Number(direction)}deg)`;
-    }
-  }, [position, direction, map]); 
+//   useEffect(() => {
+//     if (position) {
+//       map.setView(position, 15, { animate: true });
+//       map.getPane("mapPane").style.transform = `rotate(${-Number(direction)}deg)`;
+//     }
+//   }, [position, direction, map]); 
 
-  return null;
-}
+//   return null;
+// }
 
 export default function Map() {
   const [position, setPosition] = useState(null);
@@ -66,7 +66,10 @@ export default function Map() {
   }, [id]);
   
   return (
-    <div className="w-screen h-screen">
+    <div 
+      className="w-screen h-screen"
+      style={{ transform: `rotate(${dir ? (-dir) : 0}deg)` }}
+    >
       {position ? (
         <MapContainer
         center={position} // По умолчанию Прага
@@ -76,7 +79,6 @@ export default function Map() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <UpdateMapView position={position} direction={dir} />
         <Marker position={position} icon={user}></Marker>
       </MapContainer>
     ) : (

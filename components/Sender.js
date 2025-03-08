@@ -42,5 +42,5 @@ export default function LocationSender({ setId }) {
     return () => navigator.geolocation.clearWatch(watchId);
   }, []);
 
-  return error ? <p style={{ color: "red" }}>{error}</p> : <h1 className="text-center font-bold text-xl p-2 text-white">{`https://irl-minimap.vercel.app/map?id=${id}`}</h1>;
+  return error ? <p style={{ color: "red" }}>{error}</p> : <h1 className="text-center font-bold text-xl p-2 text-white">{`http://localhost:3000/map?id=${id}`}</h1>;
 }

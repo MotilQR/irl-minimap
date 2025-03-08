@@ -13,7 +13,7 @@ export default function Home() {
   },[id]) 
 
   const handleCopy = async () => {
-    const s = `https://irl-minimap.vercel.app/map?id=${id}`;
+    const s = `http://localhost:3000/map?id=${id}`;
     await navigator.clipboard.writeText(s);
   }
   
