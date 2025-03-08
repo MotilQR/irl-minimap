@@ -18,7 +18,7 @@ function UpdateMapView({ position, direction }) {
   useEffect(() => {
     if (position) {
       map.setView(position, 15, { animate: true });
-      map.getPane("mapPane").style.transform = `rotate(${-direction}deg)`;
+      map.getPane("mapPane").style.transform = `rotate(${-Number(direction)}deg)`;
     }
   }, [position, direction, map]);
 
