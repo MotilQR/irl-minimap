@@ -15,7 +15,7 @@ export async function POST(request, context) {
         return NextResponse.json({ error: "Invalid ID" }, { status: 404 });
     else 
         locations.set(id, { lat, lng, rot });
-    
+    console.log(locations);
     return NextResponse.json({ message: "Ok" });
 }
 
