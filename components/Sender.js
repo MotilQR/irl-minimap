@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react";
 import { Commet } from "react-loading-indicators";
 
-export default function LocationSender({ setId, setIsDone }) {
+export default function LocationSender({ id, setIsDone }) {
   const [error, setError] = useState(null);
-  const [id, set] = useState(null);
   const [done, setDone] = useState(false);
 
   useEffect(() => {
@@ -13,9 +12,6 @@ export default function LocationSender({ setId, setIsDone }) {
       setError("Геолокация не поддерживается вашим устройством.");
       return;
     }
-    const id = Date.now();
-    set(id);
-    setId(id);
 
 
     const sendLocation = (lat, lng) => {

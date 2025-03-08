@@ -1,18 +1,28 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Copy } from "lucide-react"; 
+import { useRouter } from 'next/navigation'
 import  LocationSender  from "@/components/Sender";
 
 export default function Home() {
+  const router = useRouter();
   const [startFlag, setStartFlag] = useState(false);
-  const [id, setId] = useState(null);
+  const [id, setId] = useState<string | null>(null)
   const [isDone, setIsDone] = useState(false);
+
+  useEffect(() => { 
+      const params = new URLSearchParams(window.location.search)
+      const idd = params.get("id");
+      setId(idd);
+    }, [])
 
   useEffect(() => {
     if (startFlag) {
-      console.log(id);
+      const idd = String(Date.now());
+      setId(idd);
+      router.push(`?id=${idd}`)
     }
-  },[id]) 
+  },[startFlag]) 
 
   useEffect(() => {
     console.log(isDone);
@@ -29,10 +39,10 @@ export default function Home() {
     <div className="flex flex-col gap-5 mx-auto w-full max-w-2xl items-center justify-center h-screen">
       <div className="flex flex-col bg-purple-800 p-6 w-[400px] rounded-lg shadow-lg items-center px-4 shadow-purple-950 ">
         <h1 className="font-mono text-2xl">Twitch IRL minimap</h1>
-        {startFlag ? (
+        {id ? (
           <div className="flex flex-col gap-2  items-center w-full">
             <div className="flex items-center mt-3 bg-purple-700 rounded-2xl shadow shadow-purple-950 w-full px-4">
-              <LocationSender setId={setId} setIsDone={setIsDone}/>
+              <LocationSender id={id} setIsDone={setIsDone}/>
               {isDone ? (
               <button
                 className="cursor-pointer hover:text-gray-300 mr-6"
