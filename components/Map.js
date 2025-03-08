@@ -28,7 +28,7 @@ const user = new Icon({
 export default function Map() {
   const [position, setPosition] = useState(null);
   const [id, setId] = useState(null); 
-  const [dir, setDir] = useState(null);
+  //const [dir, setDir] = useState(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -58,7 +58,7 @@ export default function Map() {
       getLocation(id).then((data) => {
         if (data) {
           setPosition([data.lat, data.lng]);
-          setDir(data.rot);
+          //setDir(data.rot);
           console.log(data);
         }
       });
