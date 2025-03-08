@@ -16,25 +16,21 @@ export default function LocationSender({ setId, setPos }) {
     setId(id);
 
 
-    const sendLocation = (lat, lng, rot) => {
+    const sendLocation = (lat, lng) => {
       fetch(`/api/location/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ lat, lng, rot }),
+        body: JSON.stringify({ lat, lng }),
       }).catch((err) => console.error("Ошибка при отправке координат:", err));
     };
 
     const watchId = navigator.geolocation.watchPosition(
       (pos) => {
         const { latitude, longitude } = pos.coords;
-        window.addEventListener("deviceorientation", (event) => {
-          const rot = event.alpha;
-          console.log(event.alpha);
-          setPos([latitude, longitude]);
-          sendLocation(latitude, longitude, rot);
-        })
+        setPos([latitude, longitude]);
+        sendLocation(latitude, longitude);
       },
       (err) => setError(`Ошибка геолокации: ${err.message}`),
       { enableHighAccuracy: true }
