@@ -41,7 +41,7 @@ export default function Map() {
       try {
         const response = await fetch(`/api/location/${id}`);
         if (!response.ok) throw new Error("Failed to fetch location");
-        const data = await response.json();
+        const data = await response.json(); 
   
         if (!data.location || !data.location.lat || !data.location.lng || !data.location.rot) {
           throw new Error("Invalid location data");
