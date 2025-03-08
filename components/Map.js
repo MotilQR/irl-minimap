@@ -10,7 +10,7 @@ import "leaflet/dist/leaflet.css"
 
 const user = new Icon({
     iconUrl: "/navigation.png",
-    iconSize: [50, 50] 
+    iconSize: [30, 30] 
 })
 
 // function UpdateMapView({ position, direction }) {
@@ -77,7 +77,7 @@ export default function Map() {
   }, [])
 
   useEffect(() => {
-    if (id) setInterval(() => fetchLocation(setPosition, id), 1000);
+    if (id) setInterval(() => fetchLocation(setPosition, id), 100);
   }, [id]);
   
   return (
