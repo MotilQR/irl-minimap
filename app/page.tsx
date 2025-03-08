@@ -13,7 +13,7 @@ export default function Home() {
   },[id]) 
 
   const handleCopy = async () => {
-    const s = `http://localhost:3000/map?id=${id}`;
+    const s = `${window.location.origin}/map?id=${id}`;
     await navigator.clipboard.writeText(s);
   }
   
