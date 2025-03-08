@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { Copy } from "lucide-react"; 
 import  LocationSender  from "@/components/Sender";
 
