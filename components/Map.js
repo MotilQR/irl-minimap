@@ -57,7 +57,7 @@ export default function Map() {
     if (id) {
       getLocation(id).then((data) => {
         if (data) {
-          setPosition([data.lot, data.lng]);
+          setPosition([data.lat, data.lng]);
           setDir(data.rot);
           console.log(data);
         }
