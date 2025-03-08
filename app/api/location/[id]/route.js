@@ -29,7 +29,7 @@ export async function GET(request, { params }) {
         console.log("Invalid ID");
         return NextResponse.json({ error: "Invalid ID" }, { status: 404 });
     }
-    console.log("Heyyy");
+    console.log("Location fetched successfully");
 
     return NextResponse.json({ location: locations.get(id) });
 }

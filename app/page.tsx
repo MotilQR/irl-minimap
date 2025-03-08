@@ -1,17 +1,23 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { Copy } from "lucide-react"; 
 import  LocationSender  from "@/components/Sender";
 
 export default function Home() {
   const [startFlag, setStartFlag] = useState(false);
   const [id, setId] = useState(null);
-  const [position, setPosition] = useState([]);
+  const [isDone, setIsDone] = useState(false);
+
   useEffect(() => {
     if (startFlag) {
       console.log(id);
     }
   },[id]) 
+
+  useEffect(() => {
+    console.log(isDone);
+    if (isDone) console.log("Success!");
+  }, [isDone])
 
   const handleCopy = async () => {
     const s = `${window.location.origin}/map?id=${id}`;
@@ -24,23 +30,18 @@ export default function Home() {
       <div className="flex flex-col bg-purple-800 p-6 w-[400px] rounded-lg shadow-lg items-center px-4 shadow-purple-950 ">
         <h1 className="font-mono text-2xl">Twitch IRL minimap</h1>
         {startFlag ? (
-          <div className="flex flex-col gap-2  items-center">
-            <div className="flex items-center mt-3 bg-purple-700 rounded-2xl shadow shadow-purple-950">
-              <LocationSender setId={setId} setPos={setPosition}/>
+          <div className="flex flex-col gap-2  items-center w-full">
+            <div className="flex items-center mt-3 bg-purple-700 rounded-2xl shadow shadow-purple-950 w-full px-4">
+              <LocationSender setId={setId} setIsDone={setIsDone}/>
+              {isDone ? (
               <button
                 className="cursor-pointer hover:text-gray-300 mr-6"
                 onClick={handleCopy}
               >
                 <Copy/>
               </button>
+              ) : null}
             </div>
-            {position ? (
-              <div className="flex items-center"> 
-                {position.map((cord) => (
-                  <p key={cord} className="pr-2">{cord}</p>
-                ))}
-              </div>
-            ) : null}
           </div>
         ) : (
           <div className="flex flex-col items-center">

@@ -4,6 +4,7 @@ import "./styles.css";
 import { useEffect, useState } from "react"; 
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import { Icon } from "leaflet";
+import { Commet } from "react-loading-indicators";
 import "leaflet/dist/leaflet.css"
 
 
@@ -88,7 +89,9 @@ export default function Map() {
         ></Marker>
       </MapContainer>
     ) : (
-      <h1>Loading</h1>
+      <div className="flex flex-col gap-5 mx-auto w-full max-w-2xl items-center justify-center h-screen">
+        <Commet color="#9706cc" size="medium"/> 
+      </div>
     )}
     </div>
   );
