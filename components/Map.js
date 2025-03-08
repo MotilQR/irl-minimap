@@ -2,7 +2,7 @@
 
 import "./styles.css";
 import { useEffect, useState } from "react"; 
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import { Icon } from "leaflet";
 import { Commet } from "react-loading-indicators";
 import "leaflet/dist/leaflet.css"
@@ -25,6 +25,16 @@ const user = new Icon({
 
 //   return null;
 // }
+
+function UpdateMap({ position }) {
+  const map = useMap();
+
+  useEffect(() => {
+    map.setView(position, 20, { animate: true });
+  }, [position, map]);
+
+  return null;
+}
 
 async function fetchLocation(setPos, id) {
   const getLocation = async (id) => {
@@ -58,8 +68,7 @@ async function fetchLocation(setPos, id) {
 
 export default function Map() {
   const [position, setPosition] = useState(null);
-  const [id, setId] = useState(null); 
-  //const [dir, setDir] = useState(null);
+  const [id, setId] = useState(null);
 
   useEffect(() => { 
     const params = new URLSearchParams(window.location.search)
@@ -77,13 +86,14 @@ export default function Map() {
     >
       {position ? (
         <MapContainer
-        center={position} // По умолчанию Прага
+        center={position} 
         zoom={20}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
+        <UpdateMap position={position}/>
         <Marker 
           position={position} icon={user}
         ></Marker>
