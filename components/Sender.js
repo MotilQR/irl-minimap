@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function LocationSender({ setId }) {
+export default function LocationSender({ setId, setPos }) {
   const [error, setError] = useState(null);
   const [id, set] = useState(null);
 
@@ -32,6 +32,7 @@ export default function LocationSender({ setId }) {
         window.addEventListener("deviceorientation", (event) => {
           const rot = event.alpha;
           console.log(event.alpha);
+          setPos([latitude, longitude]);
           sendLocation(latitude, longitude, rot);
         })
       },
@@ -40,7 +41,7 @@ export default function LocationSender({ setId }) {
     );
 
     return () => navigator.geolocation.clearWatch(watchId);
-  }, []);
+  }, [navigator.geolocation]);
 
   return error ? <p style={{ color: "red" }}>{error}</p> : <h1 className="text-center font-bold text-xl p-2 text-white">{`${window.location.origin}/map?id=${id}`}</h1>;
 }
