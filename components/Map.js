@@ -68,7 +68,7 @@ export default function Map() {
   return (
     <div 
       className="w-screen h-screen"
-      style={{ transform: `rotate(${dir ? (-dir) : 0}deg)` }}
+      style={{ transform: `rotate(${dir ? (dir) : 0}deg)` }}
     >
       {position ? (
         <MapContainer
