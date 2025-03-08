@@ -25,7 +25,7 @@ const user = new Icon({
 //   return null;
 // }
 
-async function fetchLocation(setPos) {
+async function fetchLocation(setPos, id) {
   const getLocation = async (id) => {
     try {
       const response = await fetch(`/api/location/${id}`);
@@ -67,7 +67,7 @@ export default function Map() {
   }, [])
 
   useEffect(() => {
-    if (id) setInterval(() => fetchLocation(setPosition), 1000);
+    if (id) setInterval(() => fetchLocation(setPosition, id), 1000);
   }, [id]);
   
   return (
