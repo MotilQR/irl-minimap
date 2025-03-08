@@ -25,6 +25,36 @@ const user = new Icon({
 //   return null;
 // }
 
+async function fetchLocation(setPos) {
+  const getLocation = async (id) => {
+    try {
+      const response = await fetch(`/api/location/${id}`);
+      if (!response.ok) throw new Error("Failed to fetch location"); 
+      const data = await response.json(); 
+
+      if (!data.location || !data.location.lat || !data.location.lng) {
+        throw new Error("Invalid location data");
+      } 
+
+      return data.location; // Возвращаем координаты
+    } catch (err) {
+      console.error("Error fetching coordinates:", err);
+      return null;
+    }
+  };
+
+  if (id) {
+    getLocation(id).then((data) => {
+      if (data) {
+        setPos([data.lat, data.lng]);
+        //setDir(data.rot);
+        console.log(data);
+      }
+    });
+  }
+}
+
+
 export default function Map() {
   const [position, setPosition] = useState(null);
   const [id, setId] = useState(null); 
@@ -37,32 +67,7 @@ export default function Map() {
   }, [])
 
   useEffect(() => {
-    const getLocation = async (id) => {
-      try {
-        const response = await fetch(`/api/location/${id}`);
-        if (!response.ok) throw new Error("Failed to fetch location"); 
-        const data = await response.json(); 
-  
-        if (!data.location || !data.location.lat || !data.location.lng) {
-          throw new Error("Invalid location data");
-        } 
-  
-        return data.location; // Возвращаем координаты
-      } catch (err) {
-        console.error("Error fetching coordinates:", err);
-        return null;
-      }
-    };
-  
-    if (id) {
-      getLocation(id).then((data) => {
-        if (data) {
-          setPosition([data.lat, data.lng]);
-          //setDir(data.rot);
-          console.log(data);
-        }
-      });
-    }
+    if (id) setInterval(() => fetchLocation(setPosition), 1000);
   }, [id]);
   
   return (

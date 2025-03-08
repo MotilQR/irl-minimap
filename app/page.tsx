@@ -24,7 +24,7 @@ export default function Home() {
       <div className="flex flex-col bg-purple-800 p-6 w-[400px] rounded-lg shadow-lg items-center px-4 shadow-purple-950 ">
         <h1 className="font-mono text-2xl">Twitch IRL minimap</h1>
         {startFlag ? (
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2  items-center">
             <div className="flex items-center mt-3 bg-purple-700 rounded-2xl shadow shadow-purple-950">
               <LocationSender setId={setId} setPos={setPosition}/>
               <button
