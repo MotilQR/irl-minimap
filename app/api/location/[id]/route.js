@@ -11,8 +11,8 @@ export async function POST(request, context) {
         return NextResponse.json({ error: "Invalid coordinates" }, { status: 404 });
 
     locations.set(id, { lat, lng, rot});
-    
-    console.log(locations);
+
+    console.log("Location pushed correctly!");
     return NextResponse.json({ message: "Ok" });
 }
 
@@ -26,6 +26,7 @@ export async function GET(request, { params }) {
 
     console.log("Requested ID:", id);
     if (!locations.has(id)) {
+        console.log("Ivalid ID");
         return NextResponse.json({ error: "Invalid ID" }, { status: 404 });
     }
     console.log("Heyyy");
