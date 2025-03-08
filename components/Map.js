@@ -20,7 +20,7 @@ function UpdateMapView({ position, direction }) {
       map.setView(position, 15, { animate: true });
       map.getPane("mapPane").style.transform = `rotate(${-Number(direction)}deg)`;
     }
-  }, [position, direction, map]);
+  }, [position, direction, map]); 
 
   return null;
 }
