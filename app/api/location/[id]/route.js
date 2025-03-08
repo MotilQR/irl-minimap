@@ -6,9 +6,8 @@ export async function POST(request, context) {
     const { lat, lng, rot } = await request.json();
     const params = await context.params;
     const id = params.id;
-    console.log(rot);
 
-    if (!lat || !lng || !rot ||  !id) 
+    if (!lat || !lng || !id) 
         return NextResponse.json({ error: "Invalid coordinates" }, { status: 404 });
 
     if (locations.has(id))
@@ -22,7 +21,6 @@ export async function POST(request, context) {
 export async function GET(request, { params }) {
     const paramss = await params;
     const id = paramss.id;
-    console.log(locations);
 
     if (!id) {
         return NextResponse.json({ error: "ID is required" }, { status: 400 });
