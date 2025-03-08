@@ -45,7 +45,7 @@ export default function Map() {
   
         if (!data.location || !data.location.lat || !data.location.lng) {
           throw new Error("Invalid location data");
-        }
+        } 
   
         return data.location; // Возвращаем координаты
       } catch (err) {
