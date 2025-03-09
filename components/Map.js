@@ -13,7 +13,7 @@ const user = new Icon({
     iconSize: [30, 30] 
 })
 
-export default function SmoothMarker({ position, icon }) {
+export function SmoothMarker({ position, icon }) {
   const markerRef = useRef(null);
 
   useEffect(() => {
