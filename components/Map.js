@@ -78,7 +78,7 @@ export default function Map() {
   }, [])
 
   useEffect(() => {
-    if (id) setInterval(() => fetchLocation(setPosition, id), 1000);
+    if (id) setInterval(() => fetchLocation(setPosition, id), 700);
   }, [id]);
   
   return (
