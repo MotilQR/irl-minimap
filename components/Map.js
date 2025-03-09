@@ -97,7 +97,7 @@ export default function Map() {
         <UpdateMap position={position}/>
         <ReactLeafletDriftMarker 
           position={position}
-          duration={600}
+          duration={1000}
           icon={user}
         />
       </MapContainer>

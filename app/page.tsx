@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Copy } from "lucide-react"; 
+import { Copy, Eye, EyeOff } from "lucide-react"; 
 import { useRouter } from 'next/navigation'
 import  LocationSender  from "@/components/Sender";
 
@@ -9,6 +9,7 @@ export default function Home() {
   const [startFlag, setStartFlag] = useState(false);
   const [id, setId] = useState<string | null>(null)
   const [isDone, setIsDone] = useState(false);
+  const [vis, setVis] = useState(true);
 
   useEffect(() => {
       let lock: WakeLockSentinel;
@@ -66,14 +67,26 @@ export default function Home() {
         {id ? (
           <div className="flex flex-col gap-2  items-center w-full">
             <div className="flex items-center mt-3 bg-purple-700 rounded-2xl shadow shadow-purple-950 w-full px-4">
-              <LocationSender id={id} setIsDone={setIsDone}/>
+              <LocationSender id={id} setIsDone={setIsDone} vis={vis}/>
               {isDone ? (
-              <button
-                className="cursor-pointer hover:text-gray-300 mr-6"
-                onClick={handleCopy}
-              >
-                <Copy/>
-              </button>
+              <div className="flex flex-col gap-2">
+                <button
+                  className="cursor-pointer hover:text-gray-300 mr-6 transition-all duration-200"
+                  onClick={handleCopy}
+                >
+                  <Copy/>
+                </button>
+                <button
+                  className="cursor-pointer hover:text-gray-300 mr-6 transition-all duration-200"
+                  onClick={() => setVis(!vis)}
+                >
+                  {vis ? (
+                    <Eye/>
+                  ) : (
+                    <EyeOff/>
+                  )}
+                </button>
+              </div>
               ) : null}
             </div>
           </div>

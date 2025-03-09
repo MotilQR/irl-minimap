@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Commet } from "react-loading-indicators";
 
-export default function LocationSender({ id, setIsDone }) {
+export default function LocationSender({ id, setIsDone, vis }) {
   const [error, setError] = useState(null);
   const [done, setDone] = useState(false);
 
@@ -38,5 +38,5 @@ export default function LocationSender({ id, setIsDone }) {
     return () => navigator.geolocation.clearWatch(watchId);
   }, [navigator.geolocation]);
 
-  return error ? <p style={{ color: "red" }}>{error}</p> : (done ? <h1 className="text-center font-bold text-xl p-2 text-white">{`${window.location.origin}/map?id=${id}`}</h1> : <div className="flex flex-col gap-5 mx-auto w-full max-w-2xl items-center"><Commet color="#cb91db" size="medium"/></div>);
+  return error ? <p style={{ color: "red" }}>{error}</p> : (done ? <h1 className="text-center font-bold text-xl p-2 text-white">{`${window.location.origin}/map?id=${(vis ? id : "#############")}`}</h1> : <div className="flex flex-col gap-5 mx-auto w-full max-w-2xl items-center"><Commet color="#cb91db" size="medium"/></div>);
 }
