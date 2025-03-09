@@ -70,6 +70,8 @@ export default function Map() {
   const [position, setPosition] = useState(null);
   const [id, setId] = useState(null);
 
+  
+
   useEffect(() => { 
     const params = new URLSearchParams(window.location.search)
     const id = params.get("id");

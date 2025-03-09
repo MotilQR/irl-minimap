@@ -10,6 +10,30 @@ export default function Home() {
   const [id, setId] = useState<string | null>(null)
   const [isDone, setIsDone] = useState(false);
 
+  useEffect(() => {
+      let lock: WakeLockSentinel;
+      
+      async function requestWakeLock() {
+        try {
+          lock = await navigator.wakeLock.request("screen");
+  
+          lock.addEventListener("release", () => {
+            console.log("Wake lock released");
+          });
+  
+          console.log("Wake lock active");
+        } catch (err) {
+          console.error(`Wake Lock error: ${err}`);
+        }
+      }
+  
+      requestWakeLock();
+  
+      return () => {
+        if (lock) lock.release();
+      };
+    }, []);
+    
   useEffect(() => { 
       const params = new URLSearchParams(window.location.search)
       const idd = params.get("id");
