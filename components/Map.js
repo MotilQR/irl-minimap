@@ -30,7 +30,7 @@ function UpdateMap({ position }) {
   const map = useMap();
 
   useEffect(() => {
-    map.setView(position, 15, { animate: true });
+    map.setView(position, 18, { animate: true });
   }, [position, map]);
 
   return null;
