@@ -30,7 +30,7 @@ function UpdateMap({ position }) {
   const map = useMap();
 
   useEffect(() => {
-    map.setView(position, 18, { animate: true });
+    map.setView(position, 17, { animate: true });
   }, [position, map]);
 
   return null;
@@ -87,7 +87,7 @@ export default function Map() {
       {position ? (
         <MapContainer
         center={position} 
-        zoom={18}
+        zoom={17}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
