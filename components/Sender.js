@@ -34,11 +34,9 @@ export default function LocationSender({ id, setIsDone, vis, setCords }) {
         cords.push(`${latitude} / ${longitude}`);
         setCords(cords);
         // console.log(cords);
-        i++;
         if (cords.length == 10) {
           setCords([]);
           cords = [];
-          i = 0;
         }
         sendLocation(latitude, longitude);
       },
