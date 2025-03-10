@@ -5,7 +5,6 @@ import { Commet } from "react-loading-indicators";
 
 export default function LocationSender({ id, setIsDone, vis, setCords }) {
   let cords = [];
-  let i = 0;
   const [error, setError] = useState(null);
   const [done, setDone] = useState(false);
 
