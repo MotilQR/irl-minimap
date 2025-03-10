@@ -4,12 +4,15 @@ import { Copy, Eye, EyeOff } from "lucide-react";
 import { useRouter } from 'next/navigation'
 import  LocationSender  from "@/components/Sender";
 
+
+
 export default function Home() {
   const router = useRouter();
   const [startFlag, setStartFlag] = useState(false);
   const [id, setId] = useState<string | null>(null)
   const [isDone, setIsDone] = useState(false);
   const [vis, setVis] = useState(true);
+  const [cords, setCords] = useState([]);
 
   useEffect(() => {
       let lock: WakeLockSentinel;
@@ -42,6 +45,11 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
+    console.log(Array.from(cords));
+    router.refresh();
+  }, [cords])
+
+  useEffect(() => {
     if (startFlag) {
       const idd = String(Date.now());
       setId(idd);
@@ -62,7 +70,7 @@ export default function Home() {
         {id ? (
           <div className="flex flex-col gap-2  items-center w-full">
             <div className="flex items-center mt-3 bg-purple-700 rounded-2xl shadow shadow-purple-950 w-full px-4">
-              <LocationSender id={id} setIsDone={setIsDone} vis={vis}/>
+              <LocationSender id={id} setIsDone={setIsDone} vis={vis} setCords={setCords}/>
               {isDone ? (
                 <div className="flex flex-col gap-4">
                   <button
@@ -84,6 +92,7 @@ export default function Home() {
                 </div>
               ) : null}
             </div>
+            <h1 className="text-white">{cords ? cords.join("\n") : ""}</h1>
           </div>
         ) : (
           <div className="flex flex-col items-center">

@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { Commet } from "react-loading-indicators";
 
-export default function LocationSender({ id, setIsDone, vis }) {
-  let cords = new Map;
+export default function LocationSender({ id, setIsDone, vis, setCords }) {
+  let cords = [];
   let i = 0;
   const [error, setError] = useState(null);
   const [done, setDone] = useState(false);
@@ -31,10 +31,13 @@ export default function LocationSender({ id, setIsDone, vis }) {
     const watchId = navigator.geolocation.watchPosition(
       (pos) => {
         const { latitude, longitude } = pos.coords;
-        cords.set(i, `${latitude} / ${longitude}`);
+        cords.push(`${latitude} / ${longitude}`);
+        setCords(cords);
+        // console.log(cords);
         i++;
         if (cords.length == 10) {
-          cords.clear();
+          setCords([]);
+          cords = [];
           i = 0;
         }
         sendLocation(latitude, longitude);
@@ -50,12 +53,7 @@ export default function LocationSender({ id, setIsDone, vis }) {
   <p style={{ color: "red" }}>{error}</p> 
   : (done ?( 
       <div className="flex flex-col gap-2">
-        <h1 className="text-center font-bold text-xl p-2 text-white">{`${window.location.origin}/map?id=${(vis ? id : "#############")}`}</h1> 
-        {cords.length > 0 ? (
-          cords.map(cord => (
-            <h1 key={cord.key}>{cord.value}</h1>
-          ))
-        ) : null}
+        <h1 className="text-center font-bold text-xl p-2 text-white">{`${window.location.origin}/map?id=${(vis ? id : "#############")}`}</h1>
       </div>
     ) : <div className="flex flex-col gap-5 mx-auto w-full max-w-2xl items-center"><Commet color="#cb91db" size="medium"/></div>);
 }
