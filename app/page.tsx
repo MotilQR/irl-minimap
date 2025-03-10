@@ -36,10 +36,10 @@ export default function Home() {
     }, []);
     
   useEffect(() => { 
-      const params = new URLSearchParams(window.location.search)
-      const idd = params.get("id");
-      setId(idd);
-    }, [])
+    const params = new URLSearchParams(window.location.search)
+    const idd = params.get("id");
+    setId(idd);
+  }, [])
 
   useEffect(() => {
     if (startFlag) {
@@ -48,11 +48,6 @@ export default function Home() {
       router.push(`?id=${idd}`)
     }
   },[startFlag]) 
-
-  useEffect(() => {
-    console.log(isDone);
-    if (isDone) console.log("Success!");
-  }, [isDone])
 
   const handleCopy = async () => {
     const s = `${window.location.origin}/map?id=${id}`;
@@ -69,24 +64,24 @@ export default function Home() {
             <div className="flex items-center mt-3 bg-purple-700 rounded-2xl shadow shadow-purple-950 w-full px-4">
               <LocationSender id={id} setIsDone={setIsDone} vis={vis}/>
               {isDone ? (
-              <div className="flex flex-col gap-4">
-                <button
-                  className="cursor-pointer hover:text-gray-300 mr-6 transition-all duration-200"
-                  onClick={handleCopy}
-                >
-                  <Copy/>
-                </button>
-                <button
-                  className="cursor-pointer hover:text-gray-300 mr-6 transition-all duration-200"
-                  onClick={() => setVis(!vis)}
-                >
-                  {vis ? (
-                    <Eye/>
-                  ) : (
-                    <EyeOff/>
-                  )}
-                </button>
-              </div>
+                <div className="flex flex-col gap-4">
+                  <button
+                    className="cursor-pointer hover:text-gray-300 mr-6 transition-all duration-200"
+                    onClick={handleCopy}
+                  >
+                    <Copy/>
+                  </button>
+                  <button
+                    className="cursor-pointer hover:text-gray-300 mr-6 transition-all duration-200"
+                    onClick={() => setVis(!vis)}
+                  >
+                    {vis ? (
+                      <Eye/>
+                    ) : (
+                      <EyeOff/>
+                    )}
+                  </button>
+                </div>
               ) : null}
             </div>
           </div>

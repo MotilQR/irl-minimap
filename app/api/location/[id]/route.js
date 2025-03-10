@@ -10,7 +10,7 @@ export async function POST(request, context) {
     if (!lat || !lng || !id) 
         return NextResponse.json({ error: "Invalid coordinates" }, { status: 404 });
 
-    locations.set(id, { lat, lng});
+    locations.set(id, { lat, lng });
 
     console.log(`${id} pushed correctly!`);
     return NextResponse.json({ message: "Ok" });
