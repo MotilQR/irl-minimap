@@ -92,7 +92,7 @@ export default function Home() {
                 </div>
               ) : null}
             </div>
-            <h1 className="text-white">{cords ? cords.join("\n") : ""}</h1>
+            <h1 className="text-white">{cords ? cords.join(" V ") : ""}</h1>
           </div>
         ) : (
           <div className="flex flex-col items-center">
