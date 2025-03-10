@@ -2,7 +2,7 @@
 - Go on the site
 - Press start
 - Copy the link into the OBS
-- In the OBS past the following CSS code
+- In the OBS past the following CSS code (or write your own if you want)
   ```CSS
   body {
     width: 100vw;
