@@ -10,6 +10,7 @@ export default function Home() {
   const [id, setId] = useState<string | null>(null)
   const [isDone, setIsDone] = useState(false);
   const [vis, setVis] = useState(true);
+  const [url, setUrl] = useState<string>("");
 
   useEffect(() => {
       let lock: WakeLockSentinel;
@@ -33,13 +34,18 @@ export default function Home() {
       return () => {
         if (lock) lock.release();
       };
-    }, []);
+  }, []);
+
+  // useEffect(() => {
+  //   console.log(url.split("/"));
+  //   console.log(`https://www.youtube.com/live_chat?v=${url.split("/")[url.split("/").length - 1]}`)
+  // }, [url])
     
   useEffect(() => { 
       const params = new URLSearchParams(window.location.search)
       const idd = params.get("id");
       setId(idd);
-    }, [])
+  }, [])
 
   useEffect(() => {
     if (startFlag) {
@@ -49,11 +55,6 @@ export default function Home() {
     }
   },[startFlag]) 
 
-  useEffect(() => {
-    console.log(isDone);
-    if (isDone) console.log("Success!");
-  }, [isDone])
-
   const handleCopy = async () => {
     const s = `${window.location.origin}/map?id=${id}`;
     await navigator.clipboard.writeText(s);
@@ -61,7 +62,7 @@ export default function Home() {
   
 
   return (
-    <div className="flex flex-col gap-5 mx-auto w-full max-w-2xl items-center justify-center h-screen">
+    <div className="flex flex-col gap-5 mx-auto w-full items-center mt-10">
       <div className="flex flex-col bg-purple-800 p-6 w-[400px] rounded-lg shadow-lg items-center px-4 shadow-purple-950 ">
         <h1 className="font-mono text-2xl">Twitch IRL minimap</h1>
         {id ? (
@@ -89,6 +90,12 @@ export default function Home() {
               </div>
               ) : null}
             </div>
+            <input
+              value={url}
+              onChange={(event) => setUrl(event.target.value)}
+              className="bg-gray-300 rounded w-full text-black p-1"
+              placeholder="Enter the stream URL"
+            />
           </div>
         ) : (
           <div className="flex flex-col items-center">
@@ -102,6 +109,15 @@ export default function Home() {
           </div>
         )}
       </div>
+      {url ? (
+        <iframe
+          src={url.split("/")[2] == "www.youtube.com" ?
+            `https://www.youtube.com/live_chat?v=${url.split("/")[url.split("/").length - 1]}&embed_domain=${window.location.hostname}`
+          : `https://www.twitch.tv/embed/${url.split("/")[url.split("/").length - 1]}/chat?darkpopout&parent=${window.location.hostname}`
+          }
+          className="h-[500px] w-[400px] rounded-2xl shadow-purple-950"
+        />
+      ) : null}
     </div>
   );
 }
