@@ -36,4 +36,4 @@
 
 
 
-aMoral support: Bochkarev Oleg @Igorok_g
+aMoral support: @Igorok_g
