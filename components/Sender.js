@@ -14,37 +14,47 @@ export default function LocationSender({ id, setIsDone, vis, setCords }) {
       return;
     }
 
+    const interval = setInterval(() => {
+      const sendLocation = (lat, lng) => {
+        fetch(`/api/location/${id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ lat, lng }),
+        }).catch((err) => console.error("Ошибка при отправке координат:", err));
+        setIsDone(true);
+        setDone(true);
+      };
 
-    const sendLocation = (lat, lng) => {
-      fetch(`/api/location/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          sendLocation(latitude, longitude);
+          const newEntry = `${latitude} / ${longitude}`;
+
+          setCords((prevCords) => {
+            const updated = [...prevCords, newEntry];
+            cords.push(newEntry);
+            if (updated.length >= 11) {
+              cords = [];
+              return [];
+            }
+
+            return updated;
+          });
         },
-        body: JSON.stringify({ lat, lng }),
-      }).catch((err) => console.error("Ошибка при отправке координат:", err));
-      setIsDone(true);
-      setDone(true);
+        (err) => {
+          setError(`Ошибка геолокации: ${err.message}`);
+        },
+        { enableHighAccuracy: true }
+      );
+    }, 500)
+
+    return () => {
+      clearInterval(interval);
     };
-
-    const watchId = navigator.geolocation.watchPosition(
-      (pos) => {
-        const { latitude, longitude } = pos.coords;
-        cords.push(`${latitude} / ${longitude}`);
-        setCords(cords);
-        // console.log(cords);
-        if (cords.length == 10) {
-          setCords([]);
-          cords = [];
-        }
-        sendLocation(latitude, longitude);
-      },
-      (err) => setError(`Ошибка геолокации: ${err.message}`),
-      { enableHighAccuracy: true }
-    );
-
-    return () => navigator.geolocation.clearWatch(watchId);
-  }, [navigator.geolocation]);
+  }, []);
 
   return error ? 
   <p style={{ color: "red" }}>{error}</p> 

@@ -51,7 +51,7 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    console.log(Array.from(cords));
+    // console.log(Array.from(cords));
     router.refresh();
   }, [cords]);
 
@@ -98,7 +98,7 @@ export default function Home() {
                 </div>
               ) : null}
             </div>
-            <h1 className="text-white">{cords ? cords.join(" V ") : ""}</h1>
+            <h1 className="text-white">{cords ? cords.join("\n") : ""}</h1>
             <input
               value={url}
               onChange={(event) => setUrl(event.target.value)}
