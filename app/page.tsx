@@ -48,16 +48,12 @@ export default function Home() {
     const params = new URLSearchParams(window.location.search)
     const idd = params.get("id");
     setId(idd);
-  }, [])
-      const params = new URLSearchParams(window.location.search)
-      const idd = params.get("id");
-      setId(idd);
-  }, [])
+  }, []);
 
   useEffect(() => {
     console.log(Array.from(cords));
     router.refresh();
-  }, [cords])
+  }, [cords]);
 
   useEffect(() => {
     if (startFlag) {
