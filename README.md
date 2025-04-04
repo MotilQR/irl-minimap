@@ -33,3 +33,7 @@
 **BTC:** bc1qkyhcwww0q8n2yqd39ychcmqv462lf37zsns7uc
 
 **TON:** UQBblF_LPH5K0UZR6WKiSp6YfvQiYEuM-oSglyNvWxEbGe7j
+
+
+
+aMoral support: @Igorok_g
