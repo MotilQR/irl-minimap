@@ -27,28 +27,36 @@ const user = new Icon({
 //   return null;
 // }
 
-function UpdateMap({ position }) {
+function UpdateMap({ cords, setPosition }) {
   const map = useMap();
+  let count = 0;
 
-  useEffect(() => {
-    map.setView(position, 17, { animate: true });
-  }, [position, map]);
+  const interval = setInterval(() => {
+
+    map.setView(cords[count], 17, { animate: true });
+    setPosition(cords[count]);
+  
+    count++;
+    if (count >= 20) 
+      clearInterval(interval);
+  }, 250);
 
   return null;
 }
 
-async function fetchLocation(setPos, id) {
+async function fetchLocation(setCords, id, cords, setPosition) {
+  let cds = [];
   const getLocation = async (id) => {
     try {
       const response = await fetch(`/api/location/${id}`);
       if (!response.ok) throw new Error("Failed to fetch location"); 
       const data = await response.json(); 
 
-      if (!data.location || !data.location.lat || !data.location.lng) {
+      if (!data.cords) {
         throw new Error("Invalid location data");
       } 
 
-      return data.location; // Возвращаем координаты
+      return data.cords; // Возвращаем координаты
     } catch (err) {
       console.error("Error fetching coordinates:", err);
       return null;
@@ -57,18 +65,25 @@ async function fetchLocation(setPos, id) {
 
   if (id) {
     getLocation(id).then((data) => {
-      if (data) {
-        setPos([data.lat, data.lng]);
-        //setDir(data.rot);
-        console.log(data);
-      }
+      if (data) 
+        cds = data;
     });
+    while (cds == cords) {
+      getLocation(id).then((data) => {
+        if (data) 
+          cds = data;
+      });
+    }
+    console.log(cds);
+    setPosition(cds[0]);
+    setCords(cds);
   }
 }
 
 
 export default function Map() {
-  const [position, setPosition] = useState(null);
+  const [cords, setCords] = useState(null);
+  const [position, setPosition] = useState();
   const [id, setId] = useState(null);
 
   useEffect(() => { 
@@ -78,14 +93,14 @@ export default function Map() {
   }, [])
 
   useEffect(() => {
-    if (id) setInterval(() => fetchLocation(setPosition, id), 700);
+    if (id) setInterval(() => fetchLocation(setCords, id, cords, setPosition), 5000);
   }, [id]);
   
   return (
     <div 
       className="w-screen h-screen"
     >
-      {position ? (
+      {false ? (
         <MapContainer
         center={position} 
         zoom={17}
@@ -94,10 +109,10 @@ export default function Map() {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <UpdateMap position={position}/>
+        <UpdateMap cords={cords} setPosition={setPosition}/>
         <ReactLeafletDriftMarker 
           position={position}
-          duration={1000}
+          duration={250}
           icon={user}
         />
       </MapContainer>

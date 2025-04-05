@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { Commet } from "react-loading-indicators";
+import normalizePath from "@/components/Path";
 
-export default function LocationSender({ id, setIsDone, vis, setCords }) {
+export default function LocationSender({ id, setIsDone, vis }) {
   let cords = [];
   const [error, setError] = useState(null);
   const [done, setDone] = useState(false);
@@ -15,13 +16,13 @@ export default function LocationSender({ id, setIsDone, vis, setCords }) {
     }
 
     const interval = setInterval(() => {
-      const sendLocation = (lat, lng) => {
+      const sendLocation = (cords) => {
         fetch(`/api/location/${id}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ lat, lng }),
+          body: JSON.stringify({ cords }),
         }).catch((err) => console.error("Ошибка при отправке координат:", err));
         setIsDone(true);
         setDone(true);
@@ -30,19 +31,14 @@ export default function LocationSender({ id, setIsDone, vis, setCords }) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          sendLocation(latitude, longitude);
-          const newEntry = `${latitude} / ${longitude}`;
+          const newEntry = [latitude, longitude];
 
-          setCords((prevCords) => {
-            const updated = [...prevCords, newEntry];
+          cords.push(newEntry);
+          if (cords.length == 10) {
+            sendLocation(normalizePath(cords));
+            cords = []
             cords.push(newEntry);
-            if (updated.length >= 11) {
-              cords = [];
-              return [];
-            }
-
-            return updated;
-          });
+          }
         },
         (err) => {
           setError(`Ошибка геолокации: ${err.message}`);
