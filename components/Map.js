@@ -45,7 +45,6 @@ function UpdateMap({ cords, setPosition }) {
 }
 
 async function fetchLocation(setCords, id, cords, setPosition) {
-  let cds = [];
   const getLocation = async (id) => {
     try {
       const response = await fetch(`/api/location/${id}`);
