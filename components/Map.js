@@ -65,18 +65,12 @@ async function fetchLocation(setCords, id, cords, setPosition) {
 
   if (id) {
     getLocation(id).then((data) => {
-      if (data) 
-        cds = data;
+      console.log(data.cords);
+      if (data) {
+        setCords(data.cords);
+        setPosition(data.cords[0])
+      }
     });
-    while (cds == cords) {
-      getLocation(id).then((data) => {
-        if (data) 
-          cds = data;
-      });
-    }
-    console.log(cds);
-    setPosition(cds[0]);
-    setCords(cds);
   }
 }
 
@@ -100,7 +94,7 @@ export default function Map() {
     <div 
       className="w-screen h-screen"
     >
-      {false ? (
+      {position ? (
         <MapContainer
         center={position} 
         zoom={17}
